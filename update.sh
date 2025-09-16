@@ -1,2 +1,3 @@
 cp ~/.zshrc .
-cp ~/.p10k.zsh .
+cp -r ~/.config/oh-my-posh .config/oh-my-posh
+cp -r ~/.dircolors .dircolors
