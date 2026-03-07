@@ -1,11 +1,36 @@
-# Add GNU coreutils and python symlinks to PATH
-export PATH="$(brew --prefix python)/libexec/bin:$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-export PATH="$PATH:/Users/idinu/.local/bin"
-
-# Alias ls to use GNU ls with color support
+# Aliases
 alias ls='ls --color=auto'
 alias vim='nvim'
-alias nvimtex='nvim --listen /tmp/nvim'
+alias vimtex='nvim --listen /tmp/nvim'
+
+# Export .env variables function
+dotenv() {
+  local file="${1:-.env}"
+  [[ -f "$file" ]] || { echo "No $file found"; return 1 }
+  set -a
+  source "$file"
+  set +a
+}
+
+# Deterministic password from service name: service-password <name>
+service-password() {
+    [[ -z "$1" ]] && { echo "Usage: service-password <service-name>"; return 1 }
+    echo "$1" | shasum -a 256 | xxd -r -p | base64 | cut -c8-20
+}
+
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+
+# Shell behavior
+setopt AUTO_CD
 
 # Incremental history search
 autoload -U up-line-or-beginning-search
@@ -15,6 +40,9 @@ zle -N down-line-or-beginning-search
 bindkey '^[[A' up-line-or-beginning-search
 bindkey '^[[B' down-line-or-beginning-search
 
+# Apply dircolors theme
+eval "$(dircolors ~/.dircolors/one-dark.dircolors)"
+
 # Autocomplete configuration
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
@@ -22,14 +50,6 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # Case insensitive matching
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
-# Apply dircolors theme
-eval "$(dircolors ~/.dircolors/one-dark.dircolors)"
-
-#eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/capr4n.omp.json)"
+# Prompt
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/sesame.omp.json)"
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/idinu/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions

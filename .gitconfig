@@ -1,0 +1,15 @@
+[user]
+	email = dinu.ioan@outlook.com
+	name = Ioan-Mihail Dinu
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
+[pull]
+	rebase = true
+[diff]
+	algorithm = histogram
+[merge]
+	conflictstyle = zdiff3
