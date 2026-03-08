@@ -1,0 +1,88 @@
+tmux_conf_24b_colour=auto
+
+# -- theming -------------------------------------------------------------------
+
+
+# -- 🎨 OH-MY-POSH THEME OVERWRITES START HERE 🎨 --
+
+# Define our custom colors from the oh-my-posh theme
+omp_green="#00953B"
+omp_yellow="#FFD100"
+omp_yellow_fg="#151515"
+omp_red="#CE0E2D"
+omp_blue="#00C4B3"
+omp_white="#FFFFFF"
+omp_inactive_fg="#aaaaaa"
+omp_status_bg="#252525"
+omp_inactive_bg="#3d3d3d"
+
+
+# Overall status bar background
+tmux_conf_theme_status_bg="$omp_status_bg"
+
+# Window status style (the tabs in the middle for inactive windows)
+tmux_conf_theme_window_status_fg="$omp_inactive_fg"
+tmux_conf_theme_window_status_bg="$omp_inactive_bg"
+tmux_conf_theme_window_status_attr="none"
+
+# Window current status style (the active tab)
+tmux_conf_theme_window_status_current_fg="$omp_yellow_fg" # Dark text
+tmux_conf_theme_window_status_current_bg="$omp_yellow"    # Yellow bg
+tmux_conf_theme_window_status_current_attr="bold"
+
+# Powerline separators for a consistent look
+# You MUST have a Nerd Font or Powerline-patched font for these to work
+tmux_conf_theme_left_separator_main='\uE0B0'   #  
+tmux_conf_theme_right_separator_main='\uE0B2'  #  
+
+
+# Status left content and style
+# The first segment (session name) will have a green background
+tmux_conf_theme_status_left=" #S "
+tmux_conf_theme_status_left_fg="$omp_white"
+tmux_conf_theme_status_left_bg="$omp_green"
+tmux_conf_theme_status_left_attr="bold"
+
+# Status right content and style
+# Segments are separated by '|'. Colors are assigned from the comma-separated list.
+# 1st segment: Red background for Time/Date
+# 2nd segment: Blue background for User/Host
+tmux_conf_theme_status_right=" %H:%M %Y-%m-%d | #{username}@#h "
+tmux_conf_theme_status_right_fg="$omp_white,$omp_yellow_fg"
+tmux_conf_theme_status_right_bg="$omp_red,$omp_blue"
+tmux_conf_theme_status_right_attr="none,bold"
+
+
+# -- 🎨 THEME OVERWRITES END HERE 🎨 --
+
+# -- user customizations -------------------------------------------------------
+set -g history-limit 10000
+set -g mouse on
+setw -g mode-keys vi
+
+# Vim-style pane navigation
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Vim-style pane resizing (capital letters, repeatable)
+bind -r H resize-pane -L 2
+bind -r J resize-pane -D 2
+bind -r K resize-pane -U 2
+bind -r L resize-pane -R 2
+
+# Swap windows left/right
+bind -r < swap-window -t -1\; select-window -t -1
+bind -r > swap-window -t +1\; select-window -t +1
+
+# Floating popup terminal
+bind f display-popup -E -w 80% -h 80% -d '#{pane_current_path}'
+
+# -- tpm -----------------------------------------------------------------------
+tmux_conf_update_plugins_on_launch=true
+tmux_conf_update_plugins_on_reload=true
+
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @continuum-restore 'on'
