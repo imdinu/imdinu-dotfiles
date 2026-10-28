@@ -2,6 +2,7 @@
 alias ls='ls --color=auto'
 alias vim='nvim'
 alias vimtex='nvim --listen /tmp/nvim'
+alias fix-pia='sudo bash ~/Documents/Dev/claude-experiments/fix-pia.sh'
 
 # Export .env variables function
 dotenv() {
@@ -52,4 +53,9 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 # Prompt
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/sesame.omp.json)"
-
+# Added by dbt v2 extension (ensure dbt binary dir on PATH)
+if [[ ":$PATH:" != *":/Users/idinu/.local/bin:"* ]]; then
+  export PATH=/Users/idinu/.local/bin:"$PATH"
+fi
+# Added by dbt v2 extension
+alias dbtf=/Users/idinu/.local/bin/dbt

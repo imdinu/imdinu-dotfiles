@@ -60,6 +60,12 @@ set -g history-limit 10000
 set -g mouse on
 setw -g mode-keys vi
 
+# Terminal integration (Ghostty, Claude Code)
+set -g allow-passthrough on
+set -g focus-events on
+set -s extended-keys on
+set -as terminal-features 'xterm*:extkeys'
+
 # Vim-style pane navigation
 bind h select-pane -L
 bind j select-pane -D
