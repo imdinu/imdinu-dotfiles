@@ -3,7 +3,7 @@ final_space = true
 shell_integration = true
 async = true
 enable_cursor_positioning = true
-console_title_template = "\uf115 {{ .Folder }}"
+console_title_template = "{{ .Folder }}"
 
 # Transient prompt: replaces previous prompts in scrollback
 [transient_prompt]
